@@ -51,7 +51,7 @@ def get_locale():
         return request.accept_languages.best_match(Config.LANGUAGES)
 
     # Default to the app's default locale
-    return Config.BABEL_DEFAULT_LOCALE
+    return app.config['LANGUAGES']
 
 
 @app.before_request
