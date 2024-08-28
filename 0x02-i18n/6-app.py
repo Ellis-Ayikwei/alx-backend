@@ -49,6 +49,7 @@ def get_locale():
         return locale_from_query
 
     # Check if locale is in user settings
+    g.user = get_user()
     user = g.user
     if user and 'locale' in user and user['locale'] in Config.LANGUAGES:
         return user['locale']
