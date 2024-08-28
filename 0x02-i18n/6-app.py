@@ -34,28 +34,32 @@ def get_user():
     return users.get(userId)
 
 
-@babel.localeselector
-def get_locale():
-    """Get the best match locale from the request."""
-    # Check if locale is in the request arguments
-    locale = request.args.get('locale')
-    if locale and locale in Config.LANGUAGES:
-        return locale
-
-    user = g.user
-    if user and user.get('locale') in Config.LANGUAGES:
-        return user.get('locale')
-    
-    locale_from_header = request.headers.get('locale')
-    if locale_from_header  and locale_from_header  in app.config['LANGUAGES']:
-        return locale
-
-    return request.accept_languages.best_match(Config.LANGUAGES)
-
 @app.before_request
 def before_request():
     """Execute before each request."""
     g.user = get_user()
+
+
+@babel.localeselector
+def get_locale():
+    """Get the best match locale from the request."""
+    # Check if locale is in the request arguments
+    locale_from_query = request.args.get('locale')
+    if locale_from_query and locale_from_query in Config.LANGUAGES:
+        return locale_from_query
+
+    # Check if locale is in user settings
+    user = g.user
+    if user and 'locale' in user and user['locale'] in Config.LANGUAGES:
+        return user['locale']
+
+    # Check if locale is in the header
+    locale_from_header = request.headers.get('locale')
+    if locale_from_header and locale_from_header in Config.LANGUAGES:
+        return locale_from_header
+
+    # Return the best match locale from the request
+    return request.accept_languages.best_match(Config.LANGUAGES)
 
 
 @app.route("/")
