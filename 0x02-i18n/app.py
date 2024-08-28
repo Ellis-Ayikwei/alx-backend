@@ -2,9 +2,10 @@
 """A basic Flask app that outputs 'Hello, World' with localization support."""
 
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, format_datetime
 from pytz import timezone
 import pytz
+from datetime import datetime
 
 
 class Config(object):
@@ -66,14 +67,14 @@ def get_locale():
 def get_timezone():
     """ get timezone """
     user = get_user()
-    if user:
-        locale = user['timezone']
     if request.args.get('timezone'):
         locale = request.args.get('timezone')
+    if user:
+        locale = user['timezone']
 
     try:
         return timezone(locale).zone
-    except Exception:
+    except pytz.exceptions.UnknownTimeZoneError:
         return None
 
 
@@ -83,10 +84,15 @@ def before_request():
     g.user = get_user()
 
 
+
 @app.route("/")
 def index_route():
     """Render the index template."""
-    return render_template("6-index.html")
+    timezone = get_timezone()
+    tz = pytz.timezone(timezone)
+    current_time = datetime.now(tz)
+    current_time = format_datetime(datetime=current_time)
+    return render_template("index.html", current_time=current_time)
 
 
 if __name__ == "__main__":
