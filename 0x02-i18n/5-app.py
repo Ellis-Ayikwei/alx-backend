@@ -34,6 +34,7 @@ def get_locale():
 
 
 def get_user():
+    """Get the user from the request."""
     login_as = request.args.get('login_as')
     if not login_as:
         return None
@@ -44,6 +45,7 @@ def get_user():
 
 @app.before_request
 def before_request():
+    """Execute before each request."""
     g.user = get_user()
 
 
