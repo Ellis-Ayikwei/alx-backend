@@ -37,14 +37,23 @@ def get_user():
 @babel.localeselector
 def get_locale():
     """Get the best match locale from the request."""
+    # Check if locale is in the request arguments
     locale = request.args.get('locale')
     if locale and locale in Config.LANGUAGES:
         return locale
-    elif g.user and g.user.get('locale') in Config.LANGUAGES:
-        return g.user.get('locale')
-    elif request.accept_languages: 
+
+    # Check if user has a set locale and it's in the list of supported languages
+    user = g.user
+    if user and user.get('locale') in Config.LANGUAGES:
+        return user.get('locale')
+
+    # If no locale is found, check the Accept-Language header
+    if request.accept_languages:
         return request.accept_languages.best_match(Config.LANGUAGES)
+
+    # Default to the app's default locale
     return Config.BABEL_DEFAULT_LOCALE
+
 
 @app.before_request
 def before_request():
