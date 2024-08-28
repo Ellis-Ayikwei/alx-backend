@@ -3,6 +3,8 @@
 
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
+from pytz import timezone
+import pytz
 
 
 class Config(object):
@@ -59,6 +61,20 @@ def get_locale():
     else:
         return app.config['BABEL_DEFAULT_LOCALE']
 
+
+@babel.timezoneselector
+def get_timezone():
+    """ get timezone """
+    user = get_user()
+    if user:
+        locale = user['timezone']
+    if request.args.get('timezone'):
+        locale = request.args.get('timezone')
+
+    try:
+        return timezone(locale).zone
+    except Exception:
+        return None
 
 
 @app.before_request
