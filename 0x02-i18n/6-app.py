@@ -57,7 +57,8 @@ def get_locale():
         return g.user.get('locale')
 
     # Check if locale is in the header
-    elif request.headers.get('locale') and request.headers.get('locale') in app.config['LANGUAGES']:
+    elif request.headers.get('locale') and \
+            request.headers.get('locale') in app.config['LANGUAGES']:
         return request.headers.get('locale')
 
     # Return the best match locale from the request
