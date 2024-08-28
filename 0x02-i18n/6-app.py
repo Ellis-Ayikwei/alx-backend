@@ -43,20 +43,22 @@ def before_request():
 @babel.localeselector
 def get_locale():
     """Get the best match locale from the request."""
+    g.user = get_user()
+    user = g.user
+    locale_from_header = request.headers.get('locale')
     # Check if locale is in the request arguments
     locale_from_query = request.args.get('locale')
     if locale_from_query and locale_from_query in Config.LANGUAGES:
         return locale_from_query
 
     # Check if locale is in user settings
-    g.user = get_user()
-    user = g.user
-    if user and 'locale' in user and user['locale'] in Config.LANGUAGES:
+    
+    elif user and 'locale' in user and user['locale'] in Config.LANGUAGES:
         return user['locale']
 
     # Check if locale is in the header
-    locale_from_header = request.headers.get('locale')
-    if locale_from_header and locale_from_header in Config.LANGUAGES:
+    
+    elif locale_from_header and locale_from_header in Config.LANGUAGES:
         return locale_from_header
 
     # Return the best match locale from the request
