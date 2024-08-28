@@ -52,7 +52,8 @@ def get_locale():
         return locale_from_query
 
     # Check if locale is in user settings
-    elif  g.user and g.user.get('locale') and g.user.get('locale') in app.config['LANGUAGES']:
+    elif  g.user and g.user.get('locale') and \
+        g.user.get('locale') in app.config['LANGUAGES']:
         return g.user.get('locale')
 
     # Check if locale is in the header
