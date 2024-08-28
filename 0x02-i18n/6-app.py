@@ -45,14 +45,12 @@ def get_locale():
     user = g.user
     if user and user.get('locale') in Config.LANGUAGES:
         return user.get('locale')
+    
+    locale_from_header = request.headers.get('locale')
+    if locale_from_header  and locale_from_header  in app.config['LANGUAGES']:
+        return locale
 
-    # If no locale is found, check the Accept-Language header
-    if request.accept_languages:
-        return request.accept_languages.best_match(Config.LANGUAGES)
-
-    # Default to the app's default locale
-    return app.config['LANGUAGES']
-
+    return request.accept_languages.best_match(Config.LANGUAGES)
 
 @app.before_request
 def before_request():
