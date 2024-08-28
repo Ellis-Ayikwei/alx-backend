@@ -34,12 +34,6 @@ def get_user():
     return users.get(userId)
 
 
-@app.before_request
-def before_request():
-    """Execute before each request."""
-    g.user = get_user()
-
-
 @babel.localeselector
 def get_locale():
     """Get the best match locale from the request."""
@@ -64,6 +58,12 @@ def get_locale():
     # Return the best match locale from the request
     else:
         return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+@app.before_request
+def before_request():
+    """Execute before each request."""
+    g.user = get_user()
 
 
 @app.route("/")
