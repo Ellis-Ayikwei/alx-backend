@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
 
-class Config:
+class Config(object):
     """Config class for Flask app settings."""
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "fr"
@@ -20,7 +20,7 @@ users = {
 }
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config.from_object('6-app.Config')
 babel = Babel(app)
 
 
