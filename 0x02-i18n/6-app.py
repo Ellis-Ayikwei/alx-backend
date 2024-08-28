@@ -42,7 +42,6 @@ def get_locale():
     if locale and locale in Config.LANGUAGES:
         return locale
 
-    # Check if user has a set locale and it's in the list of supported languages
     user = g.user
     if user and user.get('locale') in Config.LANGUAGES:
         return user.get('locale')
