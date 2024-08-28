@@ -8,7 +8,7 @@ from flask_babel import Babel
 class Config(object):
     """Config class for Flask app settings."""
     LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = "fr"
+    BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
@@ -57,7 +57,7 @@ def get_locale():
 
     # Return the best match locale from the request
     else:
-        return request.accept_languages.best_match(app.config['BABEL_DEFAULT_LOCALE'])
+        return app.config['BABEL_DEFAULT_LOCALE']
 
 
 @app.before_request
