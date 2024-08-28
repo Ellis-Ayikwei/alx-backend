@@ -44,11 +44,11 @@ def before_request():
 def get_locale():
     """Get the best match locale from the request."""
     g.user = get_user()
-    locale_from_header = request.headers.get('locale')
     # Check if locale is in the request arguments
     locale_from_query = request.args.get('locale')
 
-    if locale_from_query and locale_from_query in app.config['LANGUAGES']:
+    if request.args.get('locale') and \
+            request.args.get('locale') in app.config['LANGUAGES']:
         return locale_from_query
 
     # Check if locale is in user settings
