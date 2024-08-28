@@ -63,7 +63,7 @@ def get_locale():
 
     # Return the best match locale from the request
     else:
-        return request.accept_languages.best_match(app.config['LANGUAGES'])
+        return app.config['BABEL_DEFAULT_LOCALE']
 
 
 @app.route("/")
