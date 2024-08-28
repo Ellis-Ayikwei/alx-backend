@@ -17,6 +17,7 @@ app.config.from_object(Config)
 
 babel = Babel(app)
 
+
 @babel.localeselector
 def get_locale():
     """Get the best match locale from the request."""
