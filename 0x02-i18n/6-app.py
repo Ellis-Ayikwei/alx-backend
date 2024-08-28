@@ -49,7 +49,7 @@ def get_locale():
     locale_from_header = request.headers.get('locale')
     # Check if locale is in the request arguments
     locale_from_query = request.args.get('locale')
-    
+
     if locale_from_query and locale_from_query in app.config['LANGUAGES']:
         return locale_from_query
 
