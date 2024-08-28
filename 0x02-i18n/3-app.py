@@ -2,7 +2,7 @@
 """A basic Flask app that outputs 'Hello, World' with localization support."""
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, lazy_gettext as _
+from flask_babel import Babel
 
 
 class Config:
