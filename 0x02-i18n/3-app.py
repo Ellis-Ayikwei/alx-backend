@@ -2,11 +2,12 @@
 """A basic Flask app that outputs 'Hello, World' with localization support."""
 
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, lazy_gettext as _
 
 
 class Config:
     """Config class for Flask app settings."""
+
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
@@ -20,7 +21,7 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale():
     """Get the best match locale from the request."""
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route("/")
@@ -31,3 +32,4 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
