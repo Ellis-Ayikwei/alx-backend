@@ -3,7 +3,7 @@
 
 import csv
 import math
-from typing import List, Dict
+from typing import List, Dict, Any
 
 index_range = __import__("0-simple_helper_function").index_range
 
@@ -48,20 +48,20 @@ class Server:
 
 
 
-def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
-    hypermedia: Dict[str, Any] = {
-        "page_size": page_size,
-        "page_number": page,
-        "data": self.get_page(page, page_size),
-        "next_page_number": None,
-        "previous_page_number": None,
-        "total_pages": len(self.dataset()) / page_size,
-    }
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
+        hypermedia: Dict[str, Any] = {
+            "page_size": page_size,
+            "page_number": page,
+            "data": self.get_page(page, page_size),
+            "next_page_number": None,
+            "previous_page_number": None,
+            "total_pages": math.ceil(len(self.dataset()) / page_size)
+        }
 
-    if page > 1:
-        hypermedia["previous_page_number"] = page - 1
+        if page > 1:
+            hypermedia["previous_page_number"] = page - 1
 
-    if len(hypermedia["data"]) == page_size:
-        hypermedia["next_page_number"] = page + 1
+        if len(hypermedia["data"]) == page_size:
+            hypermedia["next_page_number"] = page + 1
 
-    return hypermedia
+        return hypermedia
