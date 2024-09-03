@@ -47,20 +47,21 @@ class Server:
         return dataset[start_index:end_index]
 
 
-def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
-    """Get the hypermedia representation of the dataset."""
-    hyper: Dict[str, Any] = {
-        "page_size": page_size,
-        "page": page,
-        "data": self.get_page(page, page_size),
-    }
-    if page > 1:
-        hyper["prev_page"] = page - 1
-    else:
-        hyper["prev_page"] = None
 
-    if len(hyper["data"]) == page_size:
-        hyper["next_page"] = page + 1
-    else:
-        hyper["next_page"] = None
-    return hyper
+def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
+    hypermedia: Dict[str, Any] = {
+        "page_size": page_size,
+        "page_number": page,
+        "data": self.get_page(page, page_size),
+        "next_page_number": None,
+        "previous_page_number": None,
+        "total_pages": math.ceil(len(self.dataset()) / page_size),
+    }
+
+    if page > 1:
+        hypermedia["previous_page_number"] = page - 1
+
+    if len(hypermedia["data"]) == page_size:
+        hypermedia["next_page_number"] = page + 1
+
+    return hypermedia
