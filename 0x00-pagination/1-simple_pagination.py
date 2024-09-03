@@ -3,7 +3,7 @@
 
 import csv
 import math
-from typing import List
+from typing import List, Dict
 
 index_range = __import__("0-simple_helper_function").index_range
 
@@ -45,3 +45,17 @@ class Server:
         if start_index > len(dataset):
             return []
         return dataset[start_index:end_index]
+
+
+def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
+    """Get the hypermedia representation of the dataset."""
+    hyper: Dict[str, Any] = {
+        "page_size": page_size,
+        "page": page,
+        "data": self.get_page(page, page_size)
+    }
+    if page > 1:
+        hyper["prev_page"] = page - 1
+    if len(hyper["data"]) == page_size:
+        hyper["next_page"] = page + 1
+    return hyper
