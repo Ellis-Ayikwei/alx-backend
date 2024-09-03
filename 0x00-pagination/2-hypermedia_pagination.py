@@ -55,7 +55,7 @@ def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
         "data": self.get_page(page, page_size),
         "next_page_number": None,
         "previous_page_number": None,
-        "total_pages": math.ceil(len(self.dataset()) / page_size),
+        "total_pages": len(self.dataset()) / page_size,
     }
 
     if page > 1:
