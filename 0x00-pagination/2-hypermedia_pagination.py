@@ -46,22 +46,39 @@ class Server:
             return []
         return dataset[start_index:end_index]
 
+    def get_hyper(self, page_number: int = 1, page_size: int = 10) -> Dict[str, Any]:
+        """
+        Get paginated data with hypermedia metadata.
 
+        Args:
+        page_number (int): The page to get. Defaults to 1.
+        page_size (int): The number of items per page. Defaults to 10.
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
-        hypermedia: Dict[str, Any] = {
-            "page_size": page_size,
-            "page_number": page,
-            "data": self.get_page(page, page_size),
-            "next_page_number": None,
-            "previous_page_number": None,
-            "total_pages": math.ceil(len(self.dataset()) / page_size)
+        Returns:
+        Dict[str, Any]: A dictionary containing the paginated data and metadata.
+        """
+        if page_size <= 0:
+            return {
+                "page_size": 0,
+                "page": page_number,
+                "data": [],
+                "next_page": None,
+                "prev_page": page_number - 1 if page_number > 1 else None,
+                "total_pages": 0,
+            }
+
+        data = self.get_page(page_number, page_size)
+        total_items = len(self.dataset())
+        total_pages =math.ceil(total_items / page_size)
+
+        next_page = page_number + 1 if page_number < total_pages else None
+        prev_page = page_number - 1 if page_number > 1 else None
+
+        return {
+            "page_size": len(data),
+            "page": page_number,
+            "data": data,
+            "next_page": next_page,
+            "prev_page": prev_page,
+            "total_pages": total_pages,
         }
-
-        if page > 1:
-            hypermedia["previous_page_number"] = page - 1
-
-        if len(hypermedia["data"]) == page_size:
-            hypermedia["next_page_number"] = page + 1
-
-        return hypermedia
