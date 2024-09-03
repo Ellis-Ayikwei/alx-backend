@@ -49,8 +49,6 @@ class Server:
 
         if index is None:
             index = 0
-        print(f"Debug: index = {index}, page_size = {page_size}")
-    
         indexed_dataset = self.indexed_dataset()
         assert 0 <= index < len(indexed_dataset)
         start_index = index
