@@ -56,6 +56,10 @@ def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
     }
     if page > 1:
         hyper["prev_page"] = page - 1
+    else:
+        hyper["prev_page"] = None
     if len(hyper["data"]) == page_size:
         hyper["next_page"] = page + 1
+    else:
+        hyper["next_page"] = None
     return hyper
