@@ -55,7 +55,8 @@ class Server:
         page_size (int): The number of items per page. Defaults to 10.
 
         Returns:
-        Dict[str, Any]: A dictionary containing the paginated data and metadata.
+        Dict[str, Any]: A dictionary containing
+        the paginated data and metadata.
         """
         if page_size <= 0:
             return {
