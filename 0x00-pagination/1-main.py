@@ -3,7 +3,7 @@
 Main file
 """
 
-Server = __import__('1-simple_pagination').Server
+Server = __import__("1-simple_pagination").Server
 
 server = Server()
 
@@ -18,7 +18,7 @@ except AssertionError:
     print("AssertionError raised with 0")
 
 try:
-    should_err = server.get_page(2, 'Bob')
+    should_err = server.get_page(2, "Bob")
 except AssertionError:
     print("AssertionError raised when page and/or page_size are not ints")
 
