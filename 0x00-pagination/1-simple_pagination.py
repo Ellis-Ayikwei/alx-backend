@@ -26,22 +26,22 @@ class Server:
 
         return self.__dataset
 
-    def get_page(self, page_number: int = 1, page_size: int = 10) -> List[List]:
+    def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
         Get items from the dataset, paginated.
 
         Args:
-        page_number (int): The page to get. Defaults to 1.
+        page (int): The page to get. Defaults to 1.
         page_size (int): The number of items per page. Defaults to 10.
 
         Returns:
         List[List]: A list of lists, where each sublist contains an item from
         the dataset.
         """
-        assert isinstance(page_number, int) and page_number > 0
+        assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
-        start_index, end_index = index_range(page_number, page_size)
+        start_index, end_index = index_range(page, page_size)
         dataset = self.dataset()
         if start_index > len(dataset):
             return []
-        return self.dataset()[start_index:end_index]
+        return dataset[start_index:end_index]
