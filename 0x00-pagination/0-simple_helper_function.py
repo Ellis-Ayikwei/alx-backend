@@ -3,9 +3,10 @@
 integer arguments page and page_size
 """
 
+
 def index_range(page: int, page_size: int) -> (int, int):
     """Returns the endpage and the startpage of
-    
+
     Keyword arguments:
     page -- the page
     page_size -- the size of the page
