@@ -6,6 +6,9 @@ from base_caching import BaseCaching
 class FIFOCache(BaseCaching):
     """Defines a BasicCache class that inherits from BaseCaching"""
 
+    def __int__(self):
+        super().__init__()
+
     def put(self, key: str, item: str) -> None:
         """Adds an item to the cache if both key and item are not None"""
         if key is not None and item is not None:  # Check both key and item
@@ -13,7 +16,7 @@ class FIFOCache(BaseCaching):
                 keys = list(self.cache_data.keys())
                 first_key = keys[0]
                 del self.cache_data[first_key]
-                print(f"Discard: {first_key}")
+                print(f"DISCARD: {first_key}")
             self.cache_data[key] = item
 
     def get(self, key: str) -> str:
