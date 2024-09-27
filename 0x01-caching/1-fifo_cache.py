@@ -13,7 +13,7 @@ class FIFOCache(BaseCaching):
                 keys = list(self.cache_data.keys())
                 first_key = keys[0]
                 del self.cache_data[first_key]
-                print(f"discard {first_key}")
+                print(f"Discard: {first_key}")
             self.cache_data[key] = item
 
     def get(self, key: str) -> str:
