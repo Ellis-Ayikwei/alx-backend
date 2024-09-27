@@ -18,12 +18,13 @@ client.on("error", (err) => {
 const queue = kue.createQueue();
 
 const asyncGet = promisify(client.get).bind(client);
+const asyncSet = promisify(client.set).bind(client)
 const reservationEnabled = true;
 
 const number = 50;
 
 const reserveSeat = async (number) => {
-	await client.set("available_seats", number);
+	await asyncSet("available_seats", number);
 };
 
 const getCurrentAvailableSeats = async () => {
@@ -32,6 +33,7 @@ const getCurrentAvailableSeats = async () => {
 
 app.get('/available_seats', async (req, res) => {
 	const availableSeats = await getCurrentAvailableSeats();
+    console.log("availbale sets", availableSeats)
 	res.json({ numberOfAvailableSeats: availableSeats });
 });
 
