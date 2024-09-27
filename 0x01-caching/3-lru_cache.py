@@ -7,21 +7,22 @@ class LRUCache(BaseCaching):
     """Defines a BasicCache class that inherits from BaseCaching"""
 
     def __init__(self):
-        self.cache_data = {}
         self.access_order = []
 
-    def get(self, key):
+    def get(self, key: str) -> str:
+        """Retrieve an item from the cache"""
         if key in self.cache_data:
             self.access_order.remove(key)
             self.access_order.append(key)
             return self.cache_data[key]
         return None
 
-    def put(self, key, item):
-        if key and item:
+    def put(self, key: str, item: str) -> None:
+        """Adds an item to the cache if both key and item are not None"""
+        if key is not None and item is not None:  # Check both key and item
             if len(self.cache_data) >= self.MAX_ITEMS:
-                lru_key = self.access_order.pop(0)
-                del self.cache_data[lru_key]
-                print(f"DISCARD: {lru_key}")
+                least_recently_used_key = self.access_order.pop(0)
+                del self.cache_data[least_recently_used_key]
+
             self.cache_data[key] = item
-            self.access_order.append(key)  
+            self.access_order.append(key)
