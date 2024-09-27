@@ -17,6 +17,7 @@ class LRUCache(BaseCaching):
             if len(self.cache_data) >= self.MAX_ITEMS:
                 least_recently_used_key = self.access_order.pop(0)
                 del self.cache_data[least_recently_used_key]
+                print(f"DISCARD: {least_recently_used_key}")
                 self.cache_data[key] = item
             self.cache_data[key] = item
             self.access_order.append(key)
