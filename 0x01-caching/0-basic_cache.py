@@ -4,19 +4,17 @@ from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
-    """Definese the class for the Basic Cache"""
+    """Defines a BasicCache class that inherits from BaseCaching"""
 
     def put(self, key: str, item: str) -> None:
-        """Add an item to the cache"""
+        """Adds an item to the cache"""
         if key is None or item is None:
             pass
         self.cache_data[key] = item
 
     def get(self, key: str) -> str:
+        """Retrieves an item from the cache"""
         if key is None:
             return None
-        """Must return the value in self.cache_data linked to key"""
-        the_value = self.cache_data.get(key)
-        if not the_value:
-            return None
-        return the_value
+        return self.cache_data.get(key)
+
