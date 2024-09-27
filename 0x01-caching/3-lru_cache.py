@@ -10,7 +10,6 @@ class LRUCache(BaseCaching):
         super().__init__()
         self.access_order = []
 
-
     def put(self, key: str, item: str) -> None:
         """Adds an item to the cache if both key and item are not None"""
         if key is not None and item is not None:
@@ -21,6 +20,7 @@ class LRUCache(BaseCaching):
                 self.cache_data[key] = item
             self.cache_data[key] = item
             self.access_order.append(key)
+
     def get(self, key: str) -> str:
         """Retrieve an item from the cache"""
         if key in self.cache_data:
