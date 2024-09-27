@@ -6,13 +6,13 @@ from base_caching import BaseCaching
 class BasicCache(BaseCaching):
     """Definese the class for the Basic Cache"""
 
-    def put(self, key, item):
+    def put(self, key: str, item: str) -> None:
         """Add an item to the cache"""
         if key is None or item is None:
             pass
         self.cache_data[key] = item
 
-    def get(self, key):
+    def get(self, key: str) -> str:
         if key is None:
             return None
         """Must return the value in self.cache_data linked to key"""
