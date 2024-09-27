@@ -7,9 +7,10 @@ class BasicCache(BaseCaching):
     """Defines a BasicCache class that inherits from BaseCaching"""
 
     def put(self, key: str, item: str) -> None:
-        """Adds an item to the cache"""
-        if key is not None or item is not None:
+        """Adds an item to the cache if both key and item are not None"""
+        if key is not None and item is not None:  # Check both key and item
             self.cache_data[key] = item
+
 
     def get(self, key: str) -> str:
         """Retrieves an item from the cache"""
